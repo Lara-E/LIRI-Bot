@@ -3,7 +3,7 @@ LIRI (Language Interpretation and Recognition Interface) is a command line node 
 Available parameters for LIRI are:
 - spotify-this-song 
 - concert-this 
-- movie-this movie
+- movie-this
 - do-what-it-says
 
 **Note:** *After cloning the repository, you must supply your own .env file containing your Spotify API keys and run npm install in order for LIRI to run properly*
