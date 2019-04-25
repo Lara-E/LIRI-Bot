@@ -3,7 +3,7 @@ var axios = require("axios");
 var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
-var moment = require("moment")
+var moment = require("moment");
 var wrap = require('word-wrap');
 var fs = require("fs");
 var command = process.argv[2];
@@ -68,7 +68,7 @@ function getConcert(band) {
             var events = response.data;
             for (var i = 0; i < 5; i++) {
                 var date = moment(events[i].datetime).format("MM/DD/YYYY")
-                console.log(" Date: " + date + "\r\n Venue: " + events[i].venue.name);
+                console.log(" Date: " + date + "\r\n Lineup " + events[i].lineup + "\r\n Venue: " + events[i].venue.name);
                 if (!events[i].venue.region) {
                     console.log(" Location: " + events[i].venue.city + ", " + events[i].venue.country + "\r\n ==========");
                 }
