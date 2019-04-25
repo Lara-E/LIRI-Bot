@@ -4,18 +4,18 @@ var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 var moment = require("moment")
-
+var wrap = require('word-wrap');
 var command = process.argv[2];
 var input = process.argv.slice(3).join(" ");
 var spotifySong = "spotify-this-song";
 var concert = "concert-this";
 var doThis = "do-what-it-says";
 var movie = "movie-this";
-// var movieUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 var queryUrl;
 
-switch (command) {
-    case (spotifySong):
+if ((command === spotifySong) || (command === concert) || (command === movie) || (command === doThis)) {
+    switch (command.toLowerCase()) {
+        case (spotifySong):
         if (input) {
             getSpotify(input);
         }
@@ -23,7 +23,7 @@ switch (command) {
             getSpotify("The Sign Ace of Base")
         }
         break;
-    case (concert):
+        case (concert):
         if (input) {
             getConcert(input);
         }
@@ -31,10 +31,22 @@ switch (command) {
             getConcert("Iron Maiden");
         }
         break;
+        case (movie): 
+        if (input) {
+            getMovie(input);
+        }
+        else {
+            getMovie("Mr. Nobody");
+        }
+        break;
+    }
 }
-
+else{
+console.log("\r\n Please enter one of the following requests: \r\n spotify-this-song <song-name> \r\n concert-this <artist or band> \r\n movie-this <movie title> \r\n do-what-it-says");
+};
+    
 function getSpotify(track) {
-    console.log("\r\n Here are the top 3 Spotify results for " + track + ":\r\n")
+    console.log("\r\n Here are the top 3 Spotify results for " + track.toUpperCase() + ":\r\n")
     spotify.search({
             type: "track",
             query: track,
@@ -58,23 +70,37 @@ function getSpotify(track) {
 };
 
 function getConcert(band) {
-    console.log("\r\n Here are the next 5 upcoming concerts for " + band + ":\r\n")
-    queryUrl = "https://rest.bandsintown.com/artists/" + band + "/events?app_id=codingbootcamp"
+    console.log("\r\n Here are the next 5 upcoming concerts for " + band.toUpperCase() + ":\r\n");
+    queryUrl = "https://rest.bandsintown.com/artists/" + band + "/events?app_id=codingbootcamp";
     axios.get(queryUrl)
     .then(function(response) {
         var events = response.data;
         for (var i = 0; i < 5; i++) {
             var date = moment(events[i].datetime).format("MM/DD/YYYY")
-            console.log("Date: " + date + "\r\n Venue: " + events[i].venue.name);
+            console.log(" Date: " + date + "\r\n Venue: " + events[i].venue.name);
            if (!events[i].venue.region) {
                console.log(" Location: " + events[i].venue.city + ", " + events[i].venue.country + "\r\n ==========");
            }
            else {
-               console.log(" Location: " + events[i].venue.city + ", " + events[i].venue.region + "\r\n ==========")
+               console.log(" Location: " + events[i].venue.city + ", " + events[i].venue.region + "\r\n ==========");
            }
         }
     })
     .catch(function(err) {
-        console.log("Oops, something went wrong \r\n" + err)
+        console.log("Oops, something went wrong \r\n" + err);
+    });
+};
+
+function getMovie(title) {
+    console.log("\r\n Here is the OMDB information for " + title.toUpperCase() + ": \r\n");
+    queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy";
+    axios.get(queryUrl)
+    .then(function(response) {
+        var film = response.data
+        console.log(" Title: " + film.Title + "\r\n Rated: " + film.Rated + "\r\n Year: " + film.Year + "\r\n IMDB Rating: " + film.imdbRating + "\r\n Rotten Tomatoes Score: " + film.Ratings[1].Value + "\r\n Country: " + film.Country + "\r\n Language: " + film.Language + "\r\n Plot: " + wrap(film.Plot) + "\r\n Actors: " + film.Actors);
     })
-}
+    .catch(function(err) {
+        console.log("Oops, something went wrong \r\n" + err);
+    });
+};
+
