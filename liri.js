@@ -15,39 +15,36 @@ var movie = "movie-this";
 var queryUrl;
 
 function askLIRI(command, input) {
-    if ((command === spotifySong) || (command === concert) || (command === movie) || (command === doThis)) {
-        switch (command.toLowerCase()) {
-            case (spotifySong):
-                if (input) {
-                    getSpotify(input);
-                }
-                else {
-                    getSpotify("The Sign Ace of Base")
-                }
-                break;
-            case (concert):
-                if (input) {
-                    getConcert(input);
-                }
-                else {
-                    getConcert("Iron Maiden");
-                }
-                break;
-            case (movie):
-                if (input) {
-                    getMovie(input);
-                }
-                else {
-                    getMovie("Mr. Nobody");
-                }
-                break;
-            case (doThis):
-                doWhat();
-                break;
-        };
-    }
-    else {
-        console.log("\r\n Please enter one of the following requests: \r\n spotify-this-song <song-name> \r\n concert-this <artist or band> \r\n movie-this <movie title> \r\n do-what-it-says");
+    switch (command.toLowerCase()) {
+        case (spotifySong):
+            if (input) {
+                getSpotify(input);
+            }
+            else {
+                getSpotify("The Sign Ace of Base")
+            }
+            break;
+        case (concert):
+            if (input) {
+                getConcert(input);
+            }
+            else {
+                getConcert("Iron Maiden");
+            }
+            break;
+        case (movie):
+            if (input) {
+                getMovie(input);
+            }
+            else {
+                getMovie("Mr. Nobody");
+            }
+            break;
+        case (doThis):
+            doWhat();
+            break;
+        default:
+            console.log("\r\n Please enter one of the following requests: \r\n spotify-this-song <song-name> \r\n concert-this <artist or band> \r\n movie-this <movie title> \r\n do-what-it-says");
     };
 };
 
