@@ -22,11 +22,11 @@ function askLIRI(command, input) {
             break;
         case (concert):
             input = input || "Iron Maiden";
-            getSpotify(input);
+            getConcert(input);
             break;
         case (movie):
             input = input || "Mr. Nobody";
-            getSpotify(input);
+            getMovie(input);
             break;
         case (doThis):
             doWhat();
