@@ -17,28 +17,16 @@ var queryUrl;
 function askLIRI(command, input) {
     switch (command.toLowerCase()) {
         case (spotifySong):
-            if (input) {
-                getSpotify(input);
-            }
-            else {
-                getSpotify("The Sign Ace of Base")
-            }
+            input = input || "The Sign Ace of Base";
+            getSpotify(input);
             break;
         case (concert):
-            if (input) {
-                getConcert(input);
-            }
-            else {
-                getConcert("Iron Maiden");
-            }
+            input = input || "Iron Maiden";
+            getSpotify(input);
             break;
         case (movie):
-            if (input) {
-                getMovie(input);
-            }
-            else {
-                getMovie("Mr. Nobody");
-            }
+            input = input || "Mr. Nobody";
+            getSpotify(input);
             break;
         case (doThis):
             doWhat();
